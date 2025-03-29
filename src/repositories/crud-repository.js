@@ -38,12 +38,18 @@ class CrudRepository {
   }
 
   async update(id , data) { //data => {col: value, ...}
+      const airplane = await this.model.findByPk(id);
+      if(!airplane){
+        throw new AppError('Not able to found the resource', StatusCodes.NOT_FOUND);
+        return airplane;
+      }
       const response = await this.model.update(data, {
         where: {
           id: id
         }
       });
-      return response;
+      const updatedAirplane = await this.model.findByPk(id);
+      return updatedAirplane;
   }
 }
 
