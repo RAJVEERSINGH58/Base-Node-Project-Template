@@ -45,7 +45,7 @@ async function getAirplane(req , res){
 // /api/v1/airplane/:id DELETE
 async function destroyAirplane(req , res){
   try {
-    const airplanes = await AirplaneService.destroyAirplane(req.params.id , data);
+    const airplanes = await AirplaneService.destroyAirplane(req.params.id);
     SuccessResponse.data = airplanes;
     return res.status(StatusCodes.OK).json(SuccessResponse);
   } catch (error) {

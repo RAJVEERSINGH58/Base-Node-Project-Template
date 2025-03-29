@@ -54,17 +54,39 @@ async function destroyAirplane(id){
   }
 }
 
-async function updateAirplane(id , data){
+async function updateAirplane(id, data) {
   try {
-    const response = await airplaneRepository.update(id , data);
+    // Validate modelNumber
+    if (!data || !data.modelNumber || data.modelNumber.trim() === "") {
+      throw new AppError("Model number should not be empty", StatusCodes.BAD_REQUEST);
+    }
+    
+    // Validate capacity
+    if (!data.capacity || isNaN(data.capacity)) {
+      throw new AppError("Capacity must be a valid number", StatusCodes.BAD_REQUEST);
+    }
+
+    if (data.capacity <= 0) {
+      throw new AppError("Capacity must be greater than 0", StatusCodes.BAD_REQUEST);
+    }
+
+    // Proceed with update
+    const response = await airplaneRepository.update(id, data);
+    if (!response) {
+      throw new AppError("Airplane not found", StatusCodes.NOT_FOUND);
+    }
+
     return response;
   } catch (error) {
-    if(error.statusCode == StatusCodes.NOT_FOUND){
-      throw new AppError('Airplane not found', error.statusCode);
-    }
-    throw new AppError('Cannot update data of airplane', StatusCodes.INTERNAL_SERVER_ERROR);
+    // Preserve the original error message instead of overriding it
+    throw new AppError(
+      error.message || "Cannot update data of airplane",
+      error.statusCode || StatusCodes.INTERNAL_SERVER_ERROR
+    );
   }
 }
+
+
 
 module.exports = {
   createAirplane,
