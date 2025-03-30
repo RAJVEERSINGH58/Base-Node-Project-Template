@@ -11,12 +11,13 @@ app.use(express.urlencoded({extended: true}));
 
 app.use('/api' , apiRoutes);
 
-app.listen(ServerConfig.PORT , async ()=>{
+app.listen(ServerConfig.PORT , ()=>{
   console.log("app is listening");
+});
 
-  const { City , Airport } = require('./models');
-  const New_Delhi = await City.findByPk(3);
-  console.log(New_Delhi);
+// const { City , Airport } = require('./models');
+  // const New_Delhi = await City.findByPk(3);
+  // console.log(New_Delhi);
   // const airport = await Mumbai.create({name: 'Chhatrapati Shivaji Maharaj International Airport' , code: 'BOM' , city_Id: 2});
   
   // const airport = await New_Delhi.createAirport({name: 'Safdarjung Airport' , code: 'SDJ'});
@@ -25,10 +26,9 @@ app.listen(ServerConfig.PORT , async ()=>{
   // const sfairport = await Airport.findByPk(3);
   // console.log(sfairport);
 
-  await City.destroy({
-    where : {
-      id: 3
-    }
-  });
-});
+  // await City.destroy({
+  //   where : {
+  //     id: 3
+  //   }
+  // });
 
