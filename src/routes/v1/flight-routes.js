@@ -4,7 +4,7 @@ const { FlightController } = require("../../controllers");
 const { FlightMiddlewares } = require("../../middlewares");
 const router = express.Router();
 
-// /api/v1/airplane POST
+// /api/v1/flights POST
 router.post(
   "/",
   FlightMiddlewares.validateCreateRequest,
@@ -13,5 +13,8 @@ router.post(
 
 router.get("/", FlightController.getAllFlights);
 
+
+// /api/v1/flights/:id GET
+router.get("/:id", FlightController.getFlight);
 
 module.exports = router;
