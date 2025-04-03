@@ -58,8 +58,10 @@ async function updateSeats(req , res){
     SuccessResponse.data = response;
     return res.status(StatusCodes.OK).json(SuccessResponse);
   } catch (error) {
+    console.log(`Controller : ${error}`)
     ErrorResponse.error = error;
-    return res.status(error.statusCode).json(ErrorResponse);
+    return res.status(error.statusCode || 500).json(ErrorResponse);
+
   }
 }
 
